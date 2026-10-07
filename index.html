@@ -1,0 +1,987 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Study Map — Math 0 2025</title>
+  <!-- Google Fonts: Plus Jakarta Sans for refined editorial modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Newsreader"', 'Georgia', 'serif'],
+          },
+          colors: {
+            sand: {
+              50: '#FDFBF7',
+              100: '#F7F5EE',
+              200: '#EFECE2',
+              300: '#E2DDCF',
+              800: '#4A463B',
+              900: '#2A2721',
+            },
+            sage: {
+              50: '#F3F6F3',
+              100: '#E2EAE2',
+              500: '#52796F',
+              600: '#3D5A52',
+            },
+            amberAccent: '#D97706',
+            terracotta: '#C86448',
+          },
+          boxShadow: {
+            'soft': '0 2px 10px -2px rgba(42, 39, 33, 0.04), 0 1px 3px -1px rgba(42, 39, 33, 0.03)',
+            'card': '0 4px 20px -2px rgba(50, 45, 35, 0.05), 0 2px 6px -1px rgba(50, 45, 35, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(50, 45, 35, 0.08), 0 4px 10px -2px rgba(50, 45, 35, 0.03)',
+            'modal': '0 25px 50px -12px rgba(42, 39, 33, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth root aesthetics */
+    body {
+      background-color: #FAF8F5;
+      color: #2D2A26;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      selection-background-color: #E2EAE2;
+    }
+
+    /* Ambient noise & subtle paper texture touch */
+    .paper-texture {
+      background-image: radial-gradient(#d3cbbf 0.75px, transparent 0.75px);
+      background-size: 24px 24px;
+      opacity: 0.25;
+    }
+
+    /* View transition slider */
+    .view-container {
+      position: relative;
+      overflow-x: hidden;
+      min-height: calc(100vh - 120px);
+    }
+
+    .view-page {
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view-page.hidden-left {
+      opacity: 0;
+      transform: translateX(-24px);
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .view-page.hidden-right {
+      opacity: 0;
+      transform: translateX(24px);
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    /* Custom Checkbox check animation */
+    .checkbox-tick {
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+      transition: stroke-dashoffset 0.22s ease-in-out;
+    }
+
+    .is-checked .checkbox-tick {
+      stroke-dashoffset: 0;
+    }
+
+    /* Progress bar smooth fill */
+    .progress-fill {
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Pulse animation for active streak */
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .flame-pulse {
+      animation: gentlePulse 2.5s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E2DDCF;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C8C2B3;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen text-[#2D2A26] flex flex-col justify-between">
+
+  <!-- Background decorative ambient dots -->
+  <div class="fixed inset-0 paper-texture pointer-events-none z-0"></div>
+
+  <!-- Main Container -->
+  <main class="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 pt-7 pb-16 flex-grow">
+
+    <!-- Brand & Top Bar -->
+    <header class="flex items-center justify-between mb-6 pb-4 border-b border-[#EAE6DE]">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-[#EFECE3] border border-[#DDD8CB] flex items-center justify-center text-lg shadow-sm">
+          🧭
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight text-[#22201D]">Study Map</h1>
+            <span class="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full bg-[#EAE6DE] text-[#635E54]">Aspirant</span>
+          </div>
+          <p class="text-xs text-[#7B7569] font-medium">Bank Exam Preparation &bull; 2025 Edition</p>
+        </div>
+      </div>
+
+      <!-- Quick action streak badge -->
+      <div class="flex items-center gap-2">
+        <button id="streak-chip" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E8E4DA] shadow-soft text-xs font-semibold text-[#5B5548] hover:border-[#D5CFBF] transition-all" title="Study Streak">
+          <span class="flame-pulse text-amber-500">🔥</span>
+          <span id="streak-count-text">1 Day Streak</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sanctuary Hero Card -->
+    <section class="bg-white rounded-3xl p-6 sm:p-7 border border-[#EBE7DD] shadow-card mb-8 relative overflow-hidden">
+      <!-- Decorative background warm gradient glow -->
+      <div class="absolute -right-16 -top-16 w-48 h-48 bg-[#F4EFE6] rounded-full blur-2xl pointer-events-none opacity-80"></div>
+      <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-[#EBF0EB] rounded-full blur-2xl pointer-events-none opacity-80"></div>
+
+      <div class="relative z-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-2 h-2 rounded-full bg-[#52796F]"></span>
+              <span class="text-xs font-bold uppercase tracking-wider text-[#686254]">Current Target Course</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-[#1F1C18] tracking-tight">Math 0 2025</h2>
+            <p class="text-xs text-[#756F62] mt-0.5 font-medium">Comprehensive Quant & Speed Arithmetic</p>
+          </div>
+
+          <!-- Total percentage circle badge -->
+          <div class="flex items-baseline sm:flex-col sm:items-end gap-1">
+            <span id="hero-percent" class="text-4xl font-extrabold text-[#24211D] tracking-tight">0%</span>
+            <span id="hero-fraction" class="text-xs font-semibold text-[#827C70]">0 / 208 Completed</span>
+          </div>
+        </div>
+
+        <!-- Master Progress Bar -->
+        <div class="w-full bg-[#F0EDE4] rounded-full h-3.5 p-0.5 mb-4 overflow-hidden border border-[#E5E0D5]">
+          <div id="master-progress-bar" class="progress-fill h-full rounded-full bg-gradient-to-r from-[#52796F] via-[#639286] to-[#88B2A6] w-0 shadow-sm"></div>
+        </div>
+
+        <!-- Micro stats & Motivational Quote -->
+        <div class="pt-3 border-t border-[#F2EFE8] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+          <div class="flex items-center gap-4 text-[#6A6456]">
+            <span><strong id="sections-cleared-count" class="font-bold text-[#2A2721]">0</strong> of 16 sections mastered</span>
+            <span class="text-[#DDD8CC]">&bull;</span>
+            <span><strong id="starred-count" class="font-bold text-amber-600">0</strong> bookmarked</span>
+          </div>
+          <div class="italic text-[#7F796E] font-serif text-[13px] flex items-center gap-1.5">
+            <span>“</span><span id="quote-display">Consistent daily practice compounds into speed.</span><span>”</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View Container (Switching between Overview & Section Items) -->
+    <div class="view-container">
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: HOME OVERVIEW (SECTIONS LIST ONLY)  -->
+      <!-- ========================================== -->
+      <section id="view-home" class="view-page">
+        <div class="flex items-center justify-between mb-4 px-1">
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-[#7A7467]">Syllabus Blueprint</h3>
+            <p class="text-xs text-[#8A8477]">Select any module to focus on its lectures</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-[#706B5F] bg-[#F1EDE4] px-2.5 py-1 rounded-full font-medium">16 Modules</span>
+          </div>
+        </div>
+
+        <!-- Section Cards Grid -->
+        <div id="section-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <!-- Dynamically populated via JavaScript -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: DEDICATED SECTION DETAIL VIEW      -->
+      <!-- ========================================== -->
+      <section id="view-detail" class="view-page hidden-right">
+        <!-- Section Navigation Header -->
+        <div class="mb-5 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <button id="btn-back" class="group flex items-center gap-2 text-xs font-bold text-[#575246] hover:text-[#1F1C18] bg-white px-3.5 py-2 rounded-xl border border-[#E4DFD3] shadow-soft transition-all active:scale-95">
+              <svg class="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5 text-[#736E62]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Back to Syllabus</span>
+            </button>
+
+            <!-- Utility options dropdown/button -->
+            <div class="flex items-center gap-2">
+              <button id="btn-quick-toggle-all" class="text-xs font-semibold text-[#666052] hover:text-[#211E18] bg-[#F2EFE7] hover:bg-[#E9E4D8] px-3 py-1.5 rounded-lg transition-colors">
+                Toggle All
+              </button>
+              <button id="btn-reset-section" class="text-xs font-semibold text-rose-700 hover:text-rose-900 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 px-3 py-1.5 rounded-lg transition-colors">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Section Banner -->
+          <div class="bg-white rounded-2xl p-5 border border-[#E9E5DC] shadow-soft">
+            <div class="flex items-center justify-between mb-2">
+              <span id="detail-tag" class="text-[11px] font-bold tracking-wider uppercase text-[#52796F] bg-[#EEF4F0] px-2.5 py-0.5 rounded-md">
+                Section 1
+              </span>
+              <span id="detail-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F3F0E6] text-[#696355]">
+                0 / 8 Completed
+              </span>
+            </div>
+            <h2 id="detail-title" class="text-xl font-bold text-[#1C1A17] tracking-tight mb-3">
+              Speed Mathematics / Vedic Maths
+            </h2>
+
+            <!-- Section local progress bar -->
+            <div class="w-full bg-[#F0EDE4] rounded-full h-2 overflow-hidden mb-3">
+              <div id="detail-progress-bar" class="progress-fill h-full bg-[#52796F] rounded-full w-0"></div>
+            </div>
+
+            <!-- Focus filter toggle (All vs Unfinished) -->
+            <div class="flex items-center justify-between pt-3 border-t border-[#F2EFE8]">
+              <div class="flex items-center gap-1.5 bg-[#F6F3EC] p-1 rounded-xl">
+                <button id="filter-all" class="px-3 py-1 text-xs font-bold rounded-lg bg-white text-[#211E18] shadow-soft transition-all">
+                  All Items
+                </button>
+                <button id="filter-remaining" class="px-3 py-1 text-xs font-semibold rounded-lg text-[#736D61] hover:text-[#211E18] transition-all">
+                  Remaining Only
+                </button>
+                <button id="filter-starred" class="px-3 py-1 text-xs font-semibold rounded-lg text-[#736D61] hover:text-[#211E18] transition-all flex items-center gap-1">
+                  <span>★</span> Starred
+                </button>
+              </div>
+
+              <span id="filter-count-info" class="text-xs text-[#8A8477]">Showing all 8 items</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist Item Container -->
+        <div id="detail-items-list" class="flex flex-col gap-2.5 pb-12">
+          <!-- Dynamically filled with interactive item cards -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Clean Custom Action Toast / Alert Modal -->
+  <div id="custom-modal" class="fixed inset-0 z-50 bg-[#25221C]/35 backdrop-blur-[2px] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="bg-white border border-[#E4DFD5] rounded-3xl max-w-sm w-full p-6 shadow-modal transform scale-95 transition-transform duration-200">
+      <div id="modal-icon" class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center text-xl mb-4">
+        ⚠️
+      </div>
+      <h3 id="modal-title" class="text-lg font-bold text-[#1C1A17] mb-1.5">Reset Progress?</h3>
+      <p id="modal-message" class="text-xs text-[#706B5E] leading-relaxed mb-5">Are you sure you want to reset all completed items in this section?</p>
+      <div class="flex items-center justify-end gap-2.5">
+        <button id="modal-cancel-btn" class="px-4 py-2 text-xs font-semibold rounded-xl text-[#605A4E] hover:bg-[#F2EFE8] transition-colors">
+          Cancel
+        </button>
+        <button id="modal-confirm-btn" class="px-4 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-soft transition-colors">
+          Confirm Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="relative z-10 w-full max-w-3xl mx-auto px-4 py-6 border-t border-[#EAE6DE] text-center text-xs text-[#8F897B]">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>Study Map &bull; Math 0 2025 Bank Exam Tracker</p>
+      <p class="flex items-center gap-1.5">
+        <span>Offline saved in browser</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================
+       COURSE SYLLABUS DEFINITION (208 Total Items)
+       Math 0 2025
+    ========================================================== */
+    const COURSE_SECTIONS = [
+      { id: "sec-1", num: 1, title: "Speed Mathematics / Vedic Maths", count: 8, icon: "⚡" },
+      { id: "sec-2", num: 2, title: "Simplification and Approximation", count: 12, icon: "🧮" },
+      { id: "sec-3", num: 3, title: "Number Series", count: 12, icon: "🔢" },
+      { id: "sec-4", num: 4, title: "Quadratic Equation and Cubic Equation", count: 13, icon: "📐" },
+      { id: "sec-5", num: 5, title: "Percentages and Ratio Proportion", count: 29, icon: "📊" },
+      { id: "sec-6", num: 6, title: "Mixture and Allegation", count: 10, icon: "🧪" },
+      { id: "sec-7", num: 7, title: "Profit and Loss and Discount", count: 11, icon: "🏷️" },
+      { id: "sec-8", num: 8, title: "Arithmetic, Geometric & Harmonic Progression", count: 3, icon: "📈" },
+      { id: "sec-9", num: 9, title: "Partnership", count: 7, icon: "🤝" },
+      { id: "sec-10", num: 10, title: "Average", count: 7, icon: "⚖️" },
+      { id: "sec-11", num: 11, title: "Ages", count: 3, icon: "⏳" },
+      { id: "sec-12", num: 12, title: "Simple Interest and Compound Interest", count: 13, icon: "💰" },
+      { id: "sec-13", num: 13, title: "Time, Work and Wages", count: 14, icon: "⏱️" },
+      { id: "sec-14", num: 14, title: "Speed, Time and Distance", count: 19, icon: "🚂" },
+      { id: "sec-15", num: 15, title: "Mensuration 2D and 3D", count: 12, icon: "📦" },
+      { id: "sec-16", num: 16, title: "Boat and Stream", count: 36, icon: "⛵" }
+    ];
+
+    // Verify 208 total targets
+    const TOTAL_SYLLABUS_ITEMS = COURSE_SECTIONS.reduce((acc, s) => acc + s.count, 0);
+
+    const STORAGE_KEY = "studymap_math0_state_v1";
+
+    const MOTIVATIONAL_QUOTES = [
+      "Speed comes from familiarity, accuracy comes from calm focus.",
+      "Clear concepts today create top percentiles tomorrow.",
+      "Consistent 30-minute blocks outperform marathon weekends.",
+      "Every single calculation practice shrinks exam stress.",
+      "Small daily checks compound into mastery.",
+      "Vedic shortcuts become second nature with steady practice."
+    ];
+
+    /* ==========================================================
+       PERSISTENT STATE CONTROLLER
+    ========================================================== */
+    let appState = {
+      completed: {},  // { 'sec-1-1': true, ... }
+      starred: {},    // { 'sec-1-1': true, ... }
+      notes: {},      // { 'sec-1-1': 'Revised twice' }
+      streakDays: 1,
+      lastVisitDate: null
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          appState = Object.assign(appState, JSON.parse(raw));
+        }
+      } catch (e) {
+        console.warn("Storage could not be loaded, using defaults", e);
+      }
+      handleStreakTracking();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        console.error("Storage save failed", e);
+      }
+    }
+
+    function handleStreakTracking() {
+      const today = new Date().toISOString().slice(0, 10);
+      if (!appState.lastVisitDate) {
+        appState.lastVisitDate = today;
+        appState.streakDays = 1;
+      } else if (appState.lastVisitDate !== today) {
+        const last = new Date(appState.lastVisitDate);
+        const curr = new Date(today);
+        const diffDays = Math.round((curr - last) / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          appState.streakDays = (appState.streakDays || 1) + 1;
+        } else if (diffDays > 1) {
+          appState.streakDays = 1; // streak broke
+        }
+        appState.lastVisitDate = today;
+        saveState();
+      }
+    }
+
+    /* ==========================================================
+       AUDIO & CELEBRATION FEEDBACK (Non-blocking Web Audio API)
+    ========================================================== */
+    function playGentleChime(isCompletion = false) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        const now = ctx.currentTime;
+
+        if (isCompletion) {
+          // Cheerful dual note
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.12); // G5
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        } else {
+          // Soft check tap
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(587.33, now + 0.08);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        }
+      } catch (err) {
+        // Audio is optional enhancement; ignore if blocked
+      }
+    }
+
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.65 },
+          colors: ['#52796F', '#D97706', '#88B2A6', '#C86448']
+        });
+      }
+    }
+
+    // DOM Elements
+    const viewHome = document.getElementById("view-home");
+    const viewDetail = document.getElementById("view-detail");
+    const sectionGrid = document.getElementById("section-grid");
+    const btnBack = document.getElementById("btn-back");
+
+    // Hero stats
+    const heroPercent = document.getElementById("hero-percent");
+    const heroFraction = document.getElementById("hero-fraction");
+    const masterProgressBar = document.getElementById("master-progress-bar");
+    const sectionsClearedCount = document.getElementById("sections-cleared-count");
+    const starredCountEl = document.getElementById("starred-count");
+    const streakCountText = document.getElementById("streak-count-text");
+    const quoteDisplay = document.getElementById("quote-display");
+
+    // Detail elements
+    const detailTag = document.getElementById("detail-tag");
+    const detailTitle = document.getElementById("detail-title");
+    const detailBadge = document.getElementById("detail-badge");
+    const detailProgressBar = document.getElementById("detail-progress-bar");
+    const detailItemsList = document.getElementById("detail-items-list");
+    const filterAllBtn = document.getElementById("filter-all");
+    const filterRemainingBtn = document.getElementById("filter-remaining");
+    const filterStarredBtn = document.getElementById("filter-starred");
+    const filterCountInfo = document.getElementById("filter-count-info");
+    const btnQuickToggleAll = document.getElementById("btn-quick-toggle-all");
+    const btnResetSection = document.getElementById("btn-reset-section");
+
+    // Modal elements
+    const customModal = document.getElementById("custom-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalMessage = document.getElementById("modal-message");
+    const modalConfirmBtn = document.getElementById("modal-confirm-btn");
+    const modalCancelBtn = document.getElementById("modal-cancel-btn");
+
+    // Active local view states
+    let currentSection = null;
+    let currentFilter = 'all'; // 'all' | 'remaining' | 'starred'
+    let modalActionCallback = null;
+
+    /* ==========================================================
+       PROGRESS CALCULATIONS
+    ========================================================== */
+    function getSectionProgress(section) {
+      let completed = 0;
+      for (let i = 1; i <= section.count; i++) {
+        if (appState.completed[`${section.id}-${i}`]) {
+          completed++;
+        }
+      }
+      const percent = section.count > 0 ? Math.round((completed / section.count) * 100) : 0;
+      return {
+        completed,
+        total: section.count,
+        percent,
+        isFinished: completed === section.count && section.count > 0
+      };
+    }
+
+    function calculateGlobalProgress() {
+      let totalItems = 0;
+      let totalCompleted = 0;
+      let clearedSections = 0;
+      let totalStarred = 0;
+
+      COURSE_SECTIONS.forEach(sec => {
+        totalItems += sec.count;
+        let sDone = 0;
+        for (let i = 1; i <= sec.count; i++) {
+          const key = `${sec.id}-${i}`;
+          if (appState.completed[key]) sDone++;
+          if (appState.starred[key]) totalStarred++;
+        }
+        if (sDone === sec.count && sec.count > 0) clearedSections++;
+        totalCompleted += sDone;
+      });
+
+      const overallPercent = totalItems > 0 ? Math.round((totalCompleted / totalItems) * 100) : 0;
+      return { totalItems, totalCompleted, clearedSections, overallPercent, totalStarred };
+    }
+
+    function updateHeroView() {
+      const stats = calculateGlobalProgress();
+      heroPercent.textContent = `${stats.overallPercent}%`;
+      heroFraction.textContent = `${stats.totalCompleted} / ${stats.totalItems} Completed`;
+      masterProgressBar.style.width = `${stats.overallPercent}%`;
+      sectionsClearedCount.textContent = stats.clearedSections;
+      starredCountEl.textContent = stats.totalStarred;
+
+      streakCountText.textContent = `${appState.streakDays || 1} Day Streak`;
+
+      // Cycle a gentle quote based on progress
+      const qIndex = Math.min(Math.floor(stats.overallPercent / 18), MOTIVATIONAL_QUOTES.length - 1);
+      quoteDisplay.textContent = MOTIVATIONAL_QUOTES[qIndex];
+    }
+
+    /* ==========================================================
+       HOME VIEW RENDERING (Syllabus Section Cards)
+    ========================================================== */
+    function renderSectionGrid() {
+      sectionGrid.innerHTML = "";
+
+      COURSE_SECTIONS.forEach((section) => {
+        const prog = getSectionProgress(section);
+
+        const card = document.createElement("div");
+        card.className = `group bg-white rounded-2xl p-4 sm:p-5 border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+          prog.isFinished 
+            ? 'border-[#D1E2D6] bg-gradient-to-br from-[#FAFCFA] to-white shadow-soft' 
+            : 'border-[#EAE5DC] hover:border-[#D5CEBF] shadow-soft hover:shadow-card hover:-translate-y-0.5'
+        }`;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-xl ${prog.isFinished ? 'bg-[#E3EDE6] text-[#3D5A52]' : 'bg-[#F4F1EA] text-[#696253]'} flex items-center justify-center text-xs font-semibold">
+                  ${section.icon}
+                </span>
+                <span class="text-[11px] font-bold tracking-wider uppercase ${prog.isFinished ? 'text-[#52796F]' : 'text-[#857F71]'}">
+                  Section ${section.num}
+                </span>
+              </div>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                prog.isFinished 
+                  ? 'bg-[#E5EFE8] text-[#3C645B]' 
+                  : prog.completed > 0 
+                    ? 'bg-[#F2EEE4] text-[#666052]' 
+                    : 'bg-[#F6F4EE] text-[#9E988A]'
+              }">
+                ${prog.isFinished ? 'Completed ✓' : `${prog.percent}%`}
+              </span>
+            </div>
+
+            <h4 class="text-sm sm:text-base font-bold text-[#23201C] group-hover:text-black line-clamp-2 leading-snug mb-3">
+              ${section.title}
+            </h4>
+          </div>
+
+          <div>
+            <div class="w-full bg-[#F2EFE8] rounded-full h-1.5 overflow-hidden mb-2">
+              <div class="h-full rounded-full transition-all duration-300 ${prog.isFinished ? 'bg-[#52796F]' : 'bg-[#7A9C92]'}" style="width: ${prog.percent}%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[11px] font-semibold text-[#807A6D]">
+              <span>${prog.completed} of ${section.count} items</span>
+              <span class="text-[#A19B8E] group-hover:translate-x-0.5 transition-transform">Open &rarr;</span>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => openSectionView(section));
+        sectionGrid.appendChild(card);
+      });
+    }
+
+    /* ==========================================================
+       VIEW TRANSITIONS & DETAIL SCREEN
+    ========================================================== */
+    function openSectionView(section) {
+      currentSection = section;
+      currentFilter = 'all';
+      updateFilterButtons();
+
+      // Set section banner values
+      detailTag.textContent = `Section ${section.num} of 16`;
+      detailTitle.textContent = section.title;
+
+      updateDetailHeaderMetrics();
+      renderDetailItems();
+
+      // Smooth slide animation
+      viewHome.classList.add("hidden-left");
+      setTimeout(() => {
+        viewHome.style.display = "none";
+        viewDetail.style.display = "block";
+        viewDetail.classList.remove("hidden-right");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 150);
+    }
+
+    function returnToHomeView() {
+      viewDetail.classList.add("hidden-right");
+      setTimeout(() => {
+        viewDetail.style.display = "none";
+        viewHome.style.display = "block";
+        viewHome.classList.remove("hidden-left");
+        renderSectionGrid();
+        updateHeroView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 150);
+    }
+
+    function updateDetailHeaderMetrics() {
+      if (!currentSection) return;
+      const prog = getSectionProgress(currentSection);
+      detailBadge.textContent = `${prog.completed} / ${prog.total} Completed (${prog.percent}%)`;
+      detailProgressBar.style.width = `${prog.percent}%`;
+
+      if (prog.isFinished) {
+        detailBadge.className = "text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#E3EDE6] text-[#3D5A52]";
+        detailProgressBar.className = "progress-fill h-full bg-[#466E64] rounded-full";
+      } else {
+        detailBadge.className = "text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F3F0E6] text-[#696355]";
+        detailProgressBar.className = "progress-fill h-full bg-[#52796F] rounded-full";
+      }
+    }
+
+    /* ==========================================================
+       DETAIL ITEMS LIST RENDERING
+    ========================================================== */
+    function renderDetailItems() {
+      if (!currentSection) return;
+      detailItemsList.innerHTML = "";
+
+      let itemsToDisplay = [];
+      for (let i = 1; i <= currentSection.count; i++) {
+        const itemKey = `${currentSection.id}-${i}`;
+        const isDone = !!appState.completed[itemKey];
+        const isStarred = !!appState.starred[itemKey];
+        const note = appState.notes[itemKey] || "";
+
+        if (currentFilter === 'remaining' && isDone) continue;
+        if (currentFilter === 'starred' && !isStarred) continue;
+
+        itemsToDisplay.push({ index: i, itemKey, isDone, isStarred, note });
+      }
+
+      filterCountInfo.textContent = `Showing ${itemsToDisplay.length} of ${currentSection.count} items`;
+
+      if (itemsToDisplay.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "bg-white border border-dashed border-[#DDD7CB] rounded-2xl p-8 text-center my-4";
+        emptyState.innerHTML = `
+          <div class="text-3xl mb-2">🌿</div>
+          <h4 class="text-sm font-bold text-[#2A2721] mb-1">No items found</h4>
+          <p class="text-xs text-[#827C70]">You're caught up under this filter. Tap "All Items" to review.</p>
+        `;
+        detailItemsList.appendChild(emptyState);
+        return;
+      }
+
+      itemsToDisplay.forEach(({ index, itemKey, isDone, isStarred, note }) => {
+        const row = document.createElement("div");
+        row.className = `group bg-white rounded-2xl p-3.5 sm:p-4 border transition-all duration-200 flex flex-col gap-2.5 ${
+          isDone ? 'border-[#EAE6DE] bg-[#FAF8F5]/90' : 'border-[#EBE6DC] hover:border-[#D6CFBF] shadow-soft'
+        }`;
+
+        // Top main check row
+        const topRow = document.createElement("div");
+        topRow.className = "flex items-center justify-between gap-3";
+
+        topRow.innerHTML = `
+          <div class="flex items-center gap-3.5 flex-1 cursor-pointer select-none">
+            <!-- Custom accessible tickbox -->
+            <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
+              isDone 
+                ? 'bg-[#52796F] border-[#52796F] shadow-sm is-checked' 
+                : 'border-[#C8C2B3] bg-white group-hover:border-[#968F7F]'
+            }">
+              <svg class="w-3.5 h-3.5 text-white checkbox-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-[11px] font-bold tracking-wider uppercase text-[#888173]">Part ${index}</span>
+                ${isStarred ? '<span class="text-amber-500 text-xs">★ Bookmarked</span>' : ''}
+              </div>
+              <h5 class="text-sm font-semibold leading-snug ${isDone ? 'line-through text-[#8F8A7E]' : 'text-[#23201C]'}">
+                Lecture / Exercise ${index}
+              </h5>
+            </div>
+          </div>
+
+          <!-- Utility actions: Star and Note buttons -->
+          <div class="flex items-center gap-1">
+            <button class="btn-star p-2 rounded-xl text-xs transition-colors ${isStarred ? 'text-amber-500 hover:text-amber-600 bg-amber-50' : 'text-[#A09A8D] hover:text-[#4A453A] hover:bg-[#F3EFE7]'}" title="${isStarred ? 'Remove Bookmark' : 'Bookmark this topic'}">
+              ★
+            </button>
+            <button class="btn-note p-2 rounded-xl text-xs text-[#A09A8D] hover:text-[#4A453A] hover:bg-[#F3EFE7] transition-colors" title="Add study note">
+              📝
+            </button>
+          </div>
+        `;
+
+        // Checkbox click toggle handler
+        topRow.querySelector(".cursor-pointer").addEventListener("click", () => {
+          toggleItemCompletion(itemKey, index);
+        });
+
+        // Bookmark toggle
+        topRow.querySelector(".btn-star").addEventListener("click", (e) => {
+          e.stopPropagation();
+          appState.starred[itemKey] = !appState.starred[itemKey];
+          if (!appState.starred[itemKey]) delete appState.starred[itemKey];
+          saveState();
+          renderDetailItems();
+          updateHeroView();
+        });
+
+        // Note Toggle / Input Area
+        const noteArea = document.createElement("div");
+        noteArea.className = `${note ? 'block' : 'hidden'} pt-2 border-t border-[#F2EEE6]`;
+        noteArea.innerHTML = `
+          <div class="flex items-center gap-2">
+            <input type="text" placeholder="Write a reminder, formula or doubt..." value="${escapeHtml(note)}" 
+              class="w-full text-xs px-3 py-1.5 rounded-lg bg-[#F8F6F1] border border-[#E0DBCF] focus:outline-none focus:border-[#52796F] text-[#332F28]" />
+            <button class="btn-save-note text-xs font-semibold px-2.5 py-1.5 bg-[#EAE6DD] text-[#555044] rounded-lg hover:bg-[#E0DBD0] transition-colors">
+              Save
+            </button>
+          </div>
+        `;
+
+        const noteInput = noteArea.querySelector("input");
+        const noteSaveBtn = noteArea.querySelector(".btn-save-note");
+
+        const saveCurrentNote = () => {
+          const val = noteInput.value.trim();
+          if (val) {
+            appState.notes[itemKey] = val;
+          } else {
+            delete appState.notes[itemKey];
+          }
+          saveState();
+          renderDetailItems();
+        };
+
+        noteSaveBtn.addEventListener("click", saveCurrentNote);
+        noteInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") saveCurrentNote();
+        });
+
+        topRow.querySelector(".btn-note").addEventListener("click", (e) => {
+          e.stopPropagation();
+          noteArea.classList.toggle("hidden");
+          if (!noteArea.classList.contains("hidden")) {
+            noteInput.focus();
+          }
+        });
+
+        row.appendChild(topRow);
+        row.appendChild(noteArea);
+        detailItemsList.appendChild(row);
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return "";
+      return text.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+
+    function toggleItemCompletion(itemKey, index) {
+      const willBeComplete = !appState.completed[itemKey];
+      appState.completed[itemKey] = willBeComplete;
+      if (!willBeComplete) delete appState.completed[itemKey];
+      saveState();
+
+      // Check section status after change
+      const prog = getSectionProgress(currentSection);
+      if (willBeComplete) {
+        if (prog.isFinished) {
+          playGentleChime(true);
+          triggerConfetti();
+        } else {
+          playGentleChime(false);
+        }
+      }
+
+      updateDetailHeaderMetrics();
+      renderDetailItems();
+      updateHeroView();
+    }
+
+    function toggleAllInSection() {
+      if (!currentSection) return;
+      const prog = getSectionProgress(currentSection);
+      const targetState = !prog.isFinished; // if not finished, complete all; if finished, uncheck all
+
+      for (let i = 1; i <= currentSection.count; i++) {
+        const key = `${currentSection.id}-${i}`;
+        if (targetState) {
+          appState.completed[key] = true;
+        } else {
+          delete appState.completed[key];
+        }
+      }
+
+      saveState();
+      if (targetState) {
+        triggerConfetti();
+        playGentleChime(true);
+      }
+      updateDetailHeaderMetrics();
+      renderDetailItems();
+      updateHeroView();
+    }
+
+    /* ==========================================================
+       MODAL CONTROLLER (FOR SECURE RESETS)
+    ========================================================== */
+    function showModal({ title, message, onConfirm }) {
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modalActionCallback = onConfirm;
+
+      customModal.classList.remove("opacity-0", "pointer-events-none");
+      customModal.querySelector("div").classList.remove("scale-95");
+      customModal.querySelector("div").classList.add("scale-100");
+    }
+
+    function closeModal() {
+      customModal.classList.add("opacity-0", "pointer-events-none");
+      customModal.querySelector("div").classList.remove("scale-100");
+      customModal.querySelector("div").classList.add("scale-95");
+      modalActionCallback = null;
+    }
+
+    modalCancelBtn.addEventListener("click", closeModal);
+    modalConfirmBtn.addEventListener("click", () => {
+      if (typeof modalActionCallback === 'function') {
+        modalActionCallback();
+      }
+      closeModal();
+    });
+
+    // Reset section action
+    btnResetSection.addEventListener("click", () => {
+      if (!currentSection) return;
+      showModal({
+        title: `Reset ${currentSection.title}?`,
+        message: `This will uncheck all ${currentSection.count} items in this module. Your bookmarks will be kept.`,
+        onConfirm: () => {
+          for (let i = 1; i <= currentSection.count; i++) {
+            delete appState.completed[`${currentSection.id}-${i}`];
+          }
+          saveState();
+          updateDetailHeaderMetrics();
+          renderDetailItems();
+          updateHeroView();
+        }
+      });
+    });
+
+    btnQuickToggleAll.addEventListener("click", toggleAllInSection);
+
+    /* ==========================================================
+       FILTER CONTROLS
+    ========================================================== */
+    function updateFilterButtons() {
+      const activeClass = "bg-white text-[#211E18] shadow-soft font-bold";
+      const inactiveClass = "text-[#736D61] hover:text-[#211E18] font-semibold";
+
+      filterAllBtn.className = `px-3 py-1 text-xs rounded-lg transition-all ${currentFilter === 'all' ? activeClass : inactiveClass}`;
+      filterRemainingBtn.className = `px-3 py-1 text-xs rounded-lg transition-all ${currentFilter === 'remaining' ? activeClass : inactiveClass}`;
+      filterStarredBtn.className = `px-3 py-1 text-xs rounded-lg transition-all flex items-center gap-1 ${currentFilter === 'starred' ? activeClass : inactiveClass}`;
+    }
+
+    filterAllBtn.addEventListener("click", () => {
+      currentFilter = 'all';
+      updateFilterButtons();
+      renderDetailItems();
+    });
+
+    filterRemainingBtn.addEventListener("click", () => {
+      currentFilter = 'remaining';
+      updateFilterButtons();
+      renderDetailItems();
+    });
+
+    filterStarredBtn.addEventListener("click", () => {
+      currentFilter = 'starred';
+      updateFilterButtons();
+      renderDetailItems();
+    });
+
+    btnBack.addEventListener("click", returnToHomeView);
+
+    /* ==========================================================
+       APP INITIALIZATION
+    ========================================================== */
+    function initApp() {
+      loadState();
+      renderSectionGrid();
+      updateHeroView();
+
+      // Ensure detail view is hidden at start
+      viewDetail.style.display = "none";
+      viewHome.style.display = "block";
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
+```
