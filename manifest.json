@@ -1,0 +1,18 @@
+{
+  "name": "Study Map — Math 0 2025",
+  "short_name": "Study Map",
+  "description": "Clean, focused preparation tracker for Math 0 2025 bank exam.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FAF8F5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%236366f1'><rect width='512' height='512' rx='128' fill='%23FAF8F5'/><path d='M160 160h192v40H160zm0 80h192v40H160zm0 80h120v40H160z' fill='%234F46E5'/><circle cx='380' cy='340' r='48' fill='%2310B981'/><path d='M365 340l10 10 20-20' stroke='%23ffffff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
